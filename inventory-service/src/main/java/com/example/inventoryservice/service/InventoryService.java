@@ -1,6 +1,7 @@
 package com.example.inventoryservice.service;
 
 import com.example.inventoryservice.dto.InventoryResponse;
+import com.example.inventoryservice.model.Inventory;
 import com.example.inventoryservice.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,15 @@ public class InventoryService {
 
     @Transactional(readOnly = true)
     public List<InventoryResponse> isInStock(List<String> skuCodes) {
-        return inventoryRepository.findBySkuCodeIn(skuCodes).get().stream()
+        List<Inventory> inventoryList;
+
+        if(skuCodes == null || skuCodes.isEmpty()) {
+            inventoryList = inventoryRepository.findAll();
+        } else {
+            inventoryList = inventoryRepository.findBySkuCodeIn(skuCodes).get();
+        }
+
+        return inventoryList.stream()
                 .map(inventory -> InventoryResponse.builder()
                         .skuCode(inventory.getSkuCode())
                         .isInStock(inventory.getQuantity() > 0)

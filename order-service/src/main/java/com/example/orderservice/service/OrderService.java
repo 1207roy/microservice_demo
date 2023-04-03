@@ -46,7 +46,7 @@ public class OrderService {
                 .collect(Collectors.toList());
 
         List<InventoryResponse> inventoryResponses = webClient.get()
-                .uri("http://localhost:8082/api/inventory")
+                .uri("http://localhost:8082/api/inventory", uriBuilder -> uriBuilder.queryParam("sku-code", skuCodes).build())
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<InventoryResponse>>() {})
                 .block();

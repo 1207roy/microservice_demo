@@ -16,20 +16,20 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
 
-//    @GetMapping()
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<InventoryResponse> isInStock(@RequestParam("sku-code") List<String> skuCodes) {
-//        return inventoryService.isInStock(skuCodes);
-//    }
-
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<InventoryResponse> isInStock() {
-
-        String[] list = new String[2];
-        list[0] = "Samsung_M31S";
-        list[1] = "IPhone_13X";
-
-        return inventoryService.isInStock(Arrays.asList(list));
+    public List<InventoryResponse> isInStock(@RequestParam(value = "sku-code", required = false) List<String> skuCodes) {
+        return inventoryService.isInStock(skuCodes);
     }
+
+//    @GetMapping()
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<InventoryResponse> isInStock() {
+//
+//        String[] list = new String[2];
+//        list[0] = "Samsung_M31S";
+//        list[1] = "IPhone_13X";
+//
+//        return inventoryService.isInStock(Arrays.asList(list));
+//    }
 }
